@@ -54,13 +54,9 @@ client.on_publish = on_publish
 # subscribe to all topics of encyclopedia by using the wildcard "#"
 client.subscribe("#", qos=1) # qos: quality of service 
 
-# ask for a message in the terminal
-payload_to_publish = input("Type the message you wish to publish: ")
-
 # a single publish, this can also be done in loops, etc.
-client.publish("topic1", payload=payload_to_publish, qos=1)
+client.publish("topic1", payload="This is a meesage from a Python script", qos=1)
 
 # loop_forever for simplicity, here you need to stop the loop manually
 # you can also use loop_start and loop_stop
 client.loop_forever() # continuously monitors network traffic for incoming and outgoing messages.
-
