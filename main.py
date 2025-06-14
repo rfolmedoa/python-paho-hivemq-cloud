@@ -1,21 +1,25 @@
-from dotenv import load_dotenv
+# loading environment variables from a .env file
+from dotenv import load_dotenv 
 import os
 load_dotenv()
 hivemq_username = os.getenv("USERNAME")
 hivemq_password = os.getenv("PASSWORD")
 hivemq_cluster_url = os.getenv("CLUSTER_URL")
 
+# This library allows Python applications to connect to an MQTT broker
 import paho.mqtt.client as paho
 from paho import mqtt
 
+# This library allows you to control which warnings are displayed
 import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 print("----------PUBLISHER/SUSCRIBER----------")
 
 # setting callbacks for different events to see if it works, print the message etc.
+# callback for when the client receives a CONNACK response from the server
 def on_connect(client, userdata, flags, rc, properties=None):
-    print("CONNACK received with code %s." % rc) # rt: return code
+    print("CONNACK received with code {}.".format(rc)) # rt: reason code
 
 # with this callback you can see if your publish was successful
 def on_publish(client, userdata, mid, properties=None):
@@ -25,7 +29,7 @@ def on_publish(client, userdata, mid, properties=None):
 def on_subscribe(client, userdata, mid, granted_qos, properties=None):
     print("Subscribed: " + str(mid) + " " + str(granted_qos))
 
-# print message, useful for checking if it was successful
+# callback for when a PUBLISH message is received from the server
 def on_message(client, userdata, msg):
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
 
